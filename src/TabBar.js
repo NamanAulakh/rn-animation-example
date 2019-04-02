@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   container: {
     height: 80,
     width: '100%',
-    backgroundColor: 'blue',
+    backgroundColor: blue,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
@@ -30,14 +30,14 @@ export default class TabBar extends Component {
     const { activeTab } = this.state;
 
     return (
-      <View style={{ backgroundColor: 'green' }}>
+      <View style={{ backgroundColor: 'white' }}>
         <View
           style={{
-            backgroundColor: 'white',
+            // backgroundColor: 'green',
             height: 60,
-            marginTop: 30,
+            marginTop: 20,
             marginBottom: 20,
-            marginLeft: 10,
+            marginHorizontal: 10,
             flexDirection: 'row',
             alignItems: 'center',
             // justifyContent: 'center',
@@ -47,11 +47,11 @@ export default class TabBar extends Component {
             <TouchableOpacity
               key={index}
               style={{
-                backgroundColor: 'yellow',
+                // backgroundColor: 'yellow',
                 flex: 1,
                 paddingBottom: 15,
                 borderBottomWidth: 5,
-                borderBottomColor: activeTab === index ? 'blue' : 'gray',
+                borderBottomColor: activeTab === index ? blue : gray,
               }}
               onPress={() => this.setState({ activeTab: index })}
             >
@@ -59,7 +59,7 @@ export default class TabBar extends Component {
                 style={{
                   fontSize: 20,
                   fontWeight: 'bold',
-                  color: activeTab === index ? 'blue' : 'gray',
+                  color: activeTab === index ? blue : gray,
                   // alignSelf: 'center',
                 }}
               >
