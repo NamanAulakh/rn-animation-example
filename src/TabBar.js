@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
 });
-
+const tabsArr = ['General', 'Pricing', 'Parts', 'Damages'];
 const Options = ({ setActiveTab }) => {
   return (
     <View>
@@ -27,8 +27,48 @@ export default class TabBar extends Component {
   setActiveTab = activeTab => this.setState({ activeTab });
 
   render() {
+    const { activeTab } = this.state;
+
     return (
       <View style={{ backgroundColor: 'green' }}>
+        <View
+          style={{
+            backgroundColor: 'white',
+            height: 60,
+            marginTop: 30,
+            marginBottom: 20,
+            marginLeft: 10,
+            flexDirection: 'row',
+            alignItems: 'center',
+            // justifyContent: 'center',
+          }}
+        >
+          {tabsArr.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              style={{
+                backgroundColor: 'yellow',
+                flex: 1,
+                paddingBottom: 15,
+                borderBottomWidth: 5,
+                borderBottomColor: activeTab === index ? 'blue' : 'gray',
+              }}
+              onPress={() => this.setState({ activeTab: index })}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                  color: activeTab === index ? 'blue' : 'gray',
+                  // alignSelf: 'center',
+                }}
+              >
+                {item}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
         <Options setActiveTab={this.setActiveTab} />
       </View>
     );
