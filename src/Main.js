@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Dimensions,
+  Alert,
   PanResponder,
   View,
   Animated,
@@ -10,6 +11,9 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Header from './Header';
+import CarList from './CarList';
+import CrossButton from './CrossButton';
+import BottomButton from './BottomButton';
 
 const styles = StyleSheet.create({
   container1: {
@@ -30,10 +34,24 @@ const styles = StyleSheet.create({
 const deviceHeight = Dimensions.get('window').height;
 
 export default class Main extends Component {
+  onCancel = () => {
+    console.log('onCancel');
+  };
+
+  showList = () => {
+    console.log('showList');
+  };
+
   render() {
     return (
       <>
         <Header />
+
+        {/* <CarList onPress={this.showList} />
+
+        <CrossButton onPress={this.onCancel} /> */}
+
+        <BottomButton onPress={() => Alert.alert('Create RO')} />
       </>
     );
   }
