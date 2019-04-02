@@ -14,6 +14,7 @@ import Header from './Header';
 import CarList from './CarList';
 import CrossButton from './CrossButton';
 import BottomButton from './BottomButton';
+import TabBar from './TabBar';
 
 const styles = StyleSheet.create({
   container1: {
@@ -51,7 +52,9 @@ export default class Main extends Component {
 
         <CrossButton onPress={this.onCancel} /> */}
 
-        <BottomButton onPress={() => Alert.alert('Create RO')} />
+        {/* <BottomButton onPress={() => Alert.alert('Create RO')} /> */}
+
+        <TabBar />
       </>
     );
   }
