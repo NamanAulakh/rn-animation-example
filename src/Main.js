@@ -9,6 +9,7 @@ import {
   Button,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Header from './Header';
 
 const styles = StyleSheet.create({
   container1: {
@@ -30,6 +31,10 @@ const deviceHeight = Dimensions.get('window').height;
 
 export default class Main extends Component {
   render() {
-    return <Icon name="rocket" size={30} color="#900" />;
+    return (
+      <>
+        <Header />
+      </>
+    );
   }
 }
