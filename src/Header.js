@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const styles = StyleSheet.create({
@@ -30,28 +30,30 @@ const styles = StyleSheet.create({
   bubbleText: { color: 'white', fontWeight: 'bold', fontSize: 20 },
 });
 const size = 35;
-const IconWithBubble = ({ name, number }) => (
-  <View>
+const IconWithBubble = ({ name, number, msg }) => (
+  <TouchableOpacity onPress={() => Alert.alert(msg)}>
     <Icon name={name} size={size} />
 
     <View style={styles.bubbleCont}>
       <Text style={styles.bubbleText}>{number}</Text>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
 export default () => (
   <View style={styles.container}>
-    <View style={{ flex: 1 }}>
+    <TouchableOpacity style={{ flex: 1 }} onPress={() => Alert.alert('Back')}>
       <Icon name="angle-left" size={size + 10} color="black" />
-    </View>
+    </TouchableOpacity>
 
     <View style={styles.rightIcons}>
-      <Icon name="search" size={size} color="black" />
+      <TouchableOpacity onPress={() => Alert.alert('Search')}>
+        <Icon name="search" size={size} color="black" />
+      </TouchableOpacity>
 
-      <IconWithBubble name="bell" number={3} />
+      <IconWithBubble name="bell" number={3} msg="Notifications" />
 
-      <IconWithBubble name="comment" number={5} />
+      <IconWithBubble name="comment" number={5} msg="Messages" />
     </View>
   </View>
 );
