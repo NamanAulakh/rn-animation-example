@@ -136,8 +136,11 @@ export default class TabBar extends Component {
     this._panResponder = PanResponder.create({
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
         const animatedValueY = this._animatedValue.y;
-        const { dy } = gestureState;
+        // const { dy } = gestureState;
+        const { dy, moveY } = gestureState;
+        // console.log('TCL: TabBar -> setup -> dy, moveY', dy, moveY);
         const { _offset, _value } = animatedValueY;
+        // console.log('TCL: TabBar -> setup -> _offset, _value', _offset, _value);
         if (_value === 0 && dy > 0) return false;
         if (_value < 0 && dy < 0) return false;
         if (_offset * -1 === _value && dy > 0) return false;
@@ -153,11 +156,15 @@ export default class TabBar extends Component {
         { dx: this._animatedValue.x, dy: this._animatedValue.y },
       ]),
       onPanResponderRelease: () => {
-        const animatedValueY = this._animatedValue.y;
-        if (animatedValueY._offset === 0) {
-          if (animatedValueY._value < 0) this.goToTop();
+        const { _offset, _value } = this._animatedValue.y;
+        if (_offset === 0) {
+          if (_value < 0) {
+            this.goToTop();
+          } else {
+            this.goToStart();
+          }
         } else {
-          if (animatedValueY._value > 0) this.goToStart();
+          this.goToStart();
         }
       },
     });
