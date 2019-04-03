@@ -141,9 +141,18 @@ export default class TabBar extends Component {
     this._animatedValue.addListener(value => (this._value = value));
 
     this._panResponder = PanResponder.create({
-      onMoveShouldSetResponderCapture: () => true,
-      onMoveShouldSetPanResponderCapture: () => true,
-      onPanResponderGrant: () => {
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
+        const animatedValueY = this._animatedValue.y;
+        const { dy } = gestureState;
+        const { _offset, _value } = animatedValueY;
+        if (_value === 0 && dy > 0) return false;
+        if (_value < 0 && dy < 0) return false;
+        if (_offset * -1 === _value && dy > 0) return false;
+
+        return true;
+      },
+      onPanResponderGrant: (evt, gestureState) => {
+        console.log('onPanResponderGrant');
         this._animatedValue.setOffset({ x: this._value.x, y: this._value.y });
         this._animatedValue.setValue({ x: 0, y: 0 });
       },
@@ -151,9 +160,10 @@ export default class TabBar extends Component {
         null,
         { dx: this._animatedValue.x, dy: this._animatedValue.y },
       ]), // Creates a function to handle the movement and set offsets
-      onPanResponderRelease: e => {
+      onPanResponderRelease: () => {
+        console.log('onPanResponderRelease');
         const animatedValueY = this._animatedValue.y;
-        console.log('@@@@@@@@@@@@@@@@@@@@@@@@', animatedValueY);
+        // console.log('@@@@@@@@@@@@@@@@@@@@@@@@', animatedValueY);
         if (animatedValueY._offset === 0) {
           if (animatedValueY._value < 0) {
             console.log('goToTop');
@@ -180,7 +190,6 @@ export default class TabBar extends Component {
     const { activeTab } = this.state;
 
     return (
-      // <TouchableOpacity style={styles.cont} onPress={onPress}>
       <Animated.View
         style={{
           ...styles.cont,
