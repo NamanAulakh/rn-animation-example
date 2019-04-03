@@ -3,7 +3,7 @@ A simple app demonstrating animation using react-native.
 
 # Usage
 
-Run ```npm i && npm start``` in the project root.
+Run ```npm i && react-native run-ios``` in the project root.
 
 # Demo
 gif is slower than actual implementation:
