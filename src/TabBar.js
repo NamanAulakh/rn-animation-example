@@ -167,19 +167,19 @@ export default class TabBar extends Component {
   goToTop = () =>
     Animated.timing(this._animatedValue.y, {
       toValue: -1 * height + 366,
-      duration: 100,
+      duration: 400,
     }).start();
 
   goToBottom = () =>
     Animated.timing(this._animatedValue.y, {
       toValue: height,
-      duration: 100,
+      duration: 400,
     }).start();
 
   goToStart = () =>
     Animated.timing(this._animatedValue.y, {
       toValue: -1 * this._animatedValue.y._offset,
-      duration: 100,
+      duration: 400,
     }).start();
 
   render() {

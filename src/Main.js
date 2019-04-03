@@ -40,10 +40,13 @@ export default class Main extends Component {
   onCancel = () => {
     // this.setState({ hide: false });
     this.tabBarRef.goToStart();
+    this.bottomButtonRef.goToStart();
   };
 
   showList = () => {
     this.tabBarRef.goToBottom();
+    this.bottomButtonRef.goToBottom();
+
     // this.tabBarRef.goDown();
   };
 
@@ -71,7 +74,12 @@ export default class Main extends Component {
               }}
             />
 
-            <BottomButton onPress={() => Alert.alert('Create RO')} />
+            <BottomButton
+              onPress={() => Alert.alert('Create RO')}
+              setRef={ref => {
+                this.bottomButtonRef = ref;
+              }}
+            />
           </>
         )}
       </View>
