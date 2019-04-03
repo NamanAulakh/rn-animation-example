@@ -38,11 +38,12 @@ export default class Main extends Component {
   state = { hide: false, tabBarRef: null };
 
   onCancel = () => {
-    this.setState({ hide: false });
+    // this.setState({ hide: false });
+    this.tabBarRef.goToStart();
   };
 
   showList = () => {
-    this.tabBarRef.goDown();
+    this.tabBarRef.goToBottom();
     // this.tabBarRef.goDown();
   };
 

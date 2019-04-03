@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import clamp from 'clamp';
 import {
-  View,
-  Text,
   StyleSheet,
   PanResponder,
-  TouchableOpacity,
-  ScrollView,
   Dimensions,
   Animated,
+  View,
+  TouchableOpacity,
+  Text,
+  ScrollView,
 } from 'react-native';
 
 const { height } = Dimensions.get('window');
@@ -134,7 +133,6 @@ export default class TabBar extends Component {
     this._value = { x: 0, y: 0 };
     this._animatedValue.addListener(value => {
       this._value = value;
-      // setRef(this._animatedValue.y);
     });
     this._panResponder = PanResponder.create({
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
@@ -147,8 +145,7 @@ export default class TabBar extends Component {
 
         return true;
       },
-      onPanResponderGrant: (evt, gestureState) => {
-        console.log('onPanResponderGrant');
+      onPanResponderGrant: () => {
         this._animatedValue.setOffset({ x: this._value.x, y: this._value.y });
         this._animatedValue.setValue({ x: 0, y: 0 });
       },
@@ -157,37 +154,33 @@ export default class TabBar extends Component {
         { dx: this._animatedValue.x, dy: this._animatedValue.y },
       ]), // Creates a function to handle the movement and set offsets
       onPanResponderRelease: () => {
-        console.log('onPanResponderRelease');
         const animatedValueY = this._animatedValue.y;
-        // console.log('@@@@@@@@@@@@@@@@@@@@@@@@', animatedValueY);
         if (animatedValueY._offset === 0) {
-          if (animatedValueY._value < 0) {
-            console.log('goToTop');
-            Animated.timing(animatedValueY, {
-              toValue: -1 * height + 366,
-              duration: 100,
-            }).start();
-          }
+          if (animatedValueY._value < 0) this.goToTop();
         } else {
-          console.log('else');
-          if (animatedValueY._value > 0) {
-            console.log('goToBottom');
-            Animated.timing(animatedValueY, {
-              toValue: -1 * animatedValueY._offset,
-              duration: 100,
-            }).start();
-          }
+          if (animatedValueY._value > 0) this.goToStart();
         }
       },
     });
   };
 
-  goDown = () => {
+  goToTop = () =>
+    Animated.timing(this._animatedValue.y, {
+      toValue: -1 * height + 366,
+      duration: 100,
+    }).start();
+
+  goToBottom = () =>
     Animated.timing(this._animatedValue.y, {
       toValue: height,
       duration: 100,
     }).start();
-  };
+
+  goToStart = () =>
+    Animated.timing(this._animatedValue.y, {
+      toValue: -1 * this._animatedValue.y._offset,
+      duration: 100,
+    }).start();
 
   render() {
     const { activeTab } = this.state;
@@ -199,9 +192,6 @@ export default class TabBar extends Component {
           transform: [{ translateY: this._animatedValue.y }],
         }}
         {...this._panResponder.panHandlers}
-        // ref={ref => {
-        //   setRef(this);
-        // }}
       >
         <View style={styles.container}>
           {Object.keys(tabs).map((key, index) => {
