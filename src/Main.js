@@ -35,14 +35,15 @@ const styles = StyleSheet.create({
 const deviceHeight = Dimensions.get('window').height;
 
 export default class Main extends Component {
-  state = { hide: false };
+  state = { hide: false, tabBarRef: null };
 
   onCancel = () => {
     this.setState({ hide: false });
   };
 
   showList = () => {
-    this.setState({ hide: true });
+    this.tabBarRef.goDown();
+    // this.tabBarRef.goDown();
   };
 
   showFullTabBar = () => {
@@ -50,7 +51,8 @@ export default class Main extends Component {
   };
 
   render() {
-    const { hide } = this.state;
+    const { hide, tabBarRef } = this.state;
+    console.log('TCL: Main -> render -> tabBarRef', tabBarRef);
 
     return (
       <View style={{ flex: 1 }}>
@@ -62,7 +64,11 @@ export default class Main extends Component {
 
         {!hide && (
           <>
-            <TabBar onPress={this.showFullTabBar} />
+            <TabBar
+              setRef={ref => {
+                this.tabBarRef = ref;
+              }}
+            />
 
             <BottomButton onPress={() => Alert.alert('Create RO')} />
           </>

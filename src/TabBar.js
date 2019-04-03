@@ -84,9 +84,8 @@ const Section = ({ heading, description, extra, index }) => {
 const GeneralSection = () => (
   <ScrollView
     contentContainerStyle={{
-      paddingBottom: 200,
+      paddingBottom: 1000,
       marginHorizontal: 5,
-      zIndex: 3,
     }}
   >
     {generalSectionsArr.map((item, index) => (
@@ -111,12 +110,6 @@ const generalSectionsArr = [
   { heading: 'Vehicle Type', description: 'New' },
   { heading: 'Age', description: '32 days' },
   { heading: 'Base Retail Price', description: '$200' },
-  { heading: 'Dummy Section', description: 'Dummy Description' },
-  { heading: 'Dummy Section', description: 'Dummy Description' },
-  { heading: 'Dummy Section', description: 'Dummy Description' },
-  { heading: 'Dummy Section', description: 'Dummy Description' },
-  { heading: 'Dummy Section', description: 'Dummy Description' },
-  { heading: 'Dummy Section', description: 'Dummy Description' },
 ];
 const tabs = {
   General: GeneralSection,
@@ -135,11 +128,14 @@ export default class TabBar extends Component {
   setActiveTab = activeTab => this.setState({ activeTab });
 
   setup = () => {
+    const { setRef } = this.props;
+    setRef(this);
     this._animatedValue = new Animated.ValueXY();
     this._value = { x: 0, y: 0 };
-    // not sure what's this
-    this._animatedValue.addListener(value => (this._value = value));
-
+    this._animatedValue.addListener(value => {
+      this._value = value;
+      // setRef(this._animatedValue.y);
+    });
     this._panResponder = PanResponder.create({
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
         const animatedValueY = this._animatedValue.y;
@@ -186,6 +182,13 @@ export default class TabBar extends Component {
     });
   };
 
+  goDown = () => {
+    Animated.timing(this._animatedValue.y, {
+      toValue: height,
+      duration: 100,
+    }).start();
+  };
+
   render() {
     const { activeTab } = this.state;
 
@@ -196,6 +199,9 @@ export default class TabBar extends Component {
           transform: [{ translateY: this._animatedValue.y }],
         }}
         {...this._panResponder.panHandlers}
+        // ref={ref => {
+        //   setRef(this);
+        // }}
       >
         <View style={styles.container}>
           {Object.keys(tabs).map((key, index) => {
