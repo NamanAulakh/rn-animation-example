@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -17,10 +17,7 @@ const styles = StyleSheet.create({
 });
 
 export default ({ onPress }) => (
-  <TouchableOpacity
-    style={{ ...styles.container, backgroundColor: blue }}
-    onPress={onPress}
-  >
+  <TouchableOpacity style={{ ...styles.container, backgroundColor: blue }} onPress={onPress}>
     <Icon name="times" size={50} color="white" />
   </TouchableOpacity>
 );

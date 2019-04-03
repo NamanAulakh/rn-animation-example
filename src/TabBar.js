@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     backgroundColor: 'white',
     top: 380,
-    // top: 80,
     width: '100%',
     zIndex: 3,
     position: 'absolute',
@@ -152,7 +151,7 @@ export default class TabBar extends Component {
       onPanResponderMove: Animated.event([
         null,
         { dx: this._animatedValue.x, dy: this._animatedValue.y },
-      ]), // Creates a function to handle the movement and set offsets
+      ]),
       onPanResponderRelease: () => {
         const animatedValueY = this._animatedValue.y;
         if (animatedValueY._offset === 0) {
