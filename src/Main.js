@@ -35,26 +35,38 @@ const styles = StyleSheet.create({
 const deviceHeight = Dimensions.get('window').height;
 
 export default class Main extends Component {
+  state = { hide: false };
+
   onCancel = () => {
-    Alert.alert('cancel');
+    this.setState({ hide: false });
   };
 
   showList = () => {
-    Alert.alert('showList');
+    this.setState({ hide: true });
+  };
+
+  showFullTabBar = () => {
+    // this.setState({ hide: true });
   };
 
   render() {
+    const { hide } = this.state;
+
     return (
-      <View style={{ flex: 1, backgroundColor: 'yellow' }}>
+      <View style={{ flex: 1 }}>
         <Header />
 
         <CarList onPress={this.showList} />
 
         <CrossButton onPress={this.onCancel} />
 
-        <TabBar />
+        {!hide && (
+          <>
+            <TabBar onPress={this.showFullTabBar} />
 
-        <BottomButton onPress={() => Alert.alert('Create RO')} />
+            <BottomButton onPress={() => Alert.alert('Create RO')} />
+          </>
+        )}
       </View>
     );
   }

@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
+import clamp from 'clamp';
 import {
   View,
   Text,
   StyleSheet,
+  PanResponder,
   TouchableOpacity,
   ScrollView,
   Dimensions,
+  Animated,
 } from 'react-native';
 
 const { height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   cont: {
+    borderTopWidth: 1,
+    borderColor: 'gray',
     backgroundColor: 'white',
-    top: 300,
+    top: 380,
+    // top: 80,
     width: '100%',
     zIndex: 3,
     position: 'absolute',
@@ -66,9 +72,7 @@ const Section = ({ heading, description, extra, index }) => {
       </View>
 
       {extra && (
-        <View
-          style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}
-        >
+        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
           <View style={styles.extra} />
 
           <Text>{extra}</Text>
@@ -77,21 +81,19 @@ const Section = ({ heading, description, extra, index }) => {
     </View>
   );
 };
-const GeneralSection = () => {
-  return (
-    <ScrollView
-      contentContainerStyle={{
-        paddingBottom: 200,
-        marginHorizontal: 5,
-        zIndex: 3,
-      }}
-    >
-      {generalSectionsArr.map((item, index) => (
-        <Section {...item} index={index} key={index} />
-      ))}
-    </ScrollView>
-  );
-};
+const GeneralSection = () => (
+  <ScrollView
+    contentContainerStyle={{
+      paddingBottom: 200,
+      marginHorizontal: 5,
+      zIndex: 3,
+    }}
+  >
+    {generalSectionsArr.map((item, index) => (
+      <Section {...item} index={index} key={index} />
+    ))}
+  </ScrollView>
+);
 const CommonTab = text => (
   <ScrollView contentContainerStyle={styles.commonTabCont}>
     <Text style={styles.commonTabText}>{text}</Text>
@@ -124,15 +126,68 @@ const tabs = {
 };
 
 export default class TabBar extends Component {
-  state = { activeTab: 'General' };
+  constructor(props) {
+    super(props);
+    this.state = { activeTab: 'General' };
+    this.setup();
+  }
 
   setActiveTab = activeTab => this.setState({ activeTab });
+
+  setup = () => {
+    this._animatedValue = new Animated.ValueXY();
+    this._value = { x: 0, y: 0 };
+    // not sure what's this
+    this._animatedValue.addListener(value => (this._value = value));
+
+    this._panResponder = PanResponder.create({
+      onMoveShouldSetResponderCapture: () => true,
+      onMoveShouldSetPanResponderCapture: () => true,
+      onPanResponderGrant: () => {
+        this._animatedValue.setOffset({ x: this._value.x, y: this._value.y });
+        this._animatedValue.setValue({ x: 0, y: 0 });
+      },
+      onPanResponderMove: Animated.event([
+        null,
+        { dx: this._animatedValue.x, dy: this._animatedValue.y },
+      ]), // Creates a function to handle the movement and set offsets
+      onPanResponderRelease: e => {
+        const animatedValueY = this._animatedValue.y;
+        console.log('@@@@@@@@@@@@@@@@@@@@@@@@', animatedValueY);
+        if (animatedValueY._offset === 0) {
+          if (animatedValueY._value < 0) {
+            console.log('goToTop');
+            Animated.timing(animatedValueY, {
+              toValue: -1 * height + 366,
+              duration: 100,
+            }).start();
+          }
+        } else {
+          console.log('else');
+          if (animatedValueY._value > 0) {
+            console.log('goToBottom');
+            Animated.timing(animatedValueY, {
+              toValue: -1 * animatedValueY._offset,
+              duration: 100,
+            }).start();
+          }
+        }
+      },
+    });
+  };
 
   render() {
     const { activeTab } = this.state;
 
     return (
-      <View style={styles.cont}>
+      // <TouchableOpacity style={styles.cont} onPress={onPress}>
+      <Animated.View
+        style={{
+          ...styles.cont,
+          transform: [{ translateY: this._animatedValue.y }],
+        }}
+        {...this._panResponder.panHandlers}
+      >
         <View style={styles.container}>
           {Object.keys(tabs).map((key, index) => {
             const tabStyles = {
@@ -162,7 +217,7 @@ export default class TabBar extends Component {
         </View>
 
         {tabs[activeTab](activeTab)}
-      </View>
+      </Animated.View>
     );
   }
 }
