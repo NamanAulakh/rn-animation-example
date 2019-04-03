@@ -36,26 +36,26 @@ const deviceHeight = Dimensions.get('window').height;
 
 export default class Main extends Component {
   onCancel = () => {
-    console.log('onCancel');
+    Alert.alert('cancel');
   };
 
   showList = () => {
-    console.log('showList');
+    Alert.alert('showList');
   };
 
   render() {
     return (
-      <>
+      <View style={{ flex: 1, backgroundColor: 'yellow' }}>
         <Header />
 
-        {/* <CarList onPress={this.showList} />
+        <CarList onPress={this.showList} />
 
-        <CrossButton onPress={this.onCancel} /> */}
-
-        {/* <BottomButton onPress={() => Alert.alert('Create RO')} /> */}
+        <CrossButton onPress={this.onCancel} />
 
         <TabBar />
-      </>
+
+        <BottomButton onPress={() => Alert.alert('Create RO')} />
+      </View>
     );
   }
 }

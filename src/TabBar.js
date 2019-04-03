@@ -10,6 +10,13 @@ import {
 
 const { height } = Dimensions.get('window');
 const styles = StyleSheet.create({
+  cont: {
+    backgroundColor: 'white',
+    top: 300,
+    width: '100%',
+    zIndex: 3,
+    position: 'absolute',
+  },
   container: {
     height: 60,
     marginTop: 20,
@@ -17,6 +24,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     flexDirection: 'row',
     alignItems: 'center',
+    zIndex: 3,
   },
   extra: {
     height: 15,
@@ -30,6 +38,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 3,
   },
   commonTabText: {
     marginTop: height / 3,
@@ -71,7 +80,11 @@ const Section = ({ heading, description, extra, index }) => {
 const GeneralSection = () => {
   return (
     <ScrollView
-      contentContainerStyle={{ paddingBottom: 200, marginHorizontal: 5 }}
+      contentContainerStyle={{
+        paddingBottom: 200,
+        marginHorizontal: 5,
+        zIndex: 3,
+      }}
     >
       {generalSectionsArr.map((item, index) => (
         <Section {...item} index={index} key={index} />
@@ -119,7 +132,7 @@ export default class TabBar extends Component {
     const { activeTab } = this.state;
 
     return (
-      <>
+      <View style={styles.cont}>
         <View style={styles.container}>
           {Object.keys(tabs).map((key, index) => {
             const tabStyles = {
@@ -127,6 +140,7 @@ export default class TabBar extends Component {
               paddingBottom: 15,
               borderBottomWidth: 5,
               borderBottomColor: activeTab === key ? blue : gray,
+              zIndex: 3,
             };
             const tabTextStyles = {
               fontSize: 20,
@@ -148,7 +162,7 @@ export default class TabBar extends Component {
         </View>
 
         {tabs[activeTab](activeTab)}
-      </>
+      </View>
     );
   }
 }

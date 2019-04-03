@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     bottom: 40,
     left: '38%',
+    zIndex: 2,
   },
 });
 

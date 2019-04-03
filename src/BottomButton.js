@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     bottom: 0,
+    zIndex: 4,
   },
 });
 

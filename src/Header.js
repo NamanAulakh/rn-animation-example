@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 10,
+    zIndex: 1,
   },
   rightIcons: {
     flex: 1,
@@ -28,7 +29,6 @@ const styles = StyleSheet.create({
   },
   bubbleText: { color: 'white', fontWeight: 'bold', fontSize: 20 },
 });
-const size = 35;
 const IconWithBubble = ({ name, number, msg }) => (
   <TouchableOpacity onPress={() => Alert.alert(msg)}>
     <Icon name={name} size={size} />
@@ -38,6 +38,7 @@ const IconWithBubble = ({ name, number, msg }) => (
     </View>
   </TouchableOpacity>
 );
+const size = 35;
 
 export default () => (
   <View style={styles.container}>
