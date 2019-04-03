@@ -2,7 +2,7 @@
 A simple app demonstrating animation using react-native.
 
 # Scope
-Tested on iPhone devices from iPhone6 to iPhone8
+**Tested on iPhone devices from iPhone6 to iPhone8**
 
 # Usage
 
@@ -14,6 +14,6 @@ Tested on iPhone devices from iPhone6 to iPhone8
 2. Expo: https://exp.host/@namanaulakh/rn-animation-example
 
 # Demo
-gif is slower than actual implementation:
+**gif is slower than actual implementation:**
 
 [![demo](https://github.com/NamanAulakh/rn-animation-example/blob/master/assets/animationExample.gif)
