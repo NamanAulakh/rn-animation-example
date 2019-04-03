@@ -23,8 +23,9 @@ export default class TabBar extends Component {
     this._panResponder = PanResponder.create({
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
         const animatedValueY = this._animatedValue.y;
-        const { dy, moveY } = gestureState;
+        const { dy, moveY, dx } = gestureState;
         const { _offset, _value } = animatedValueY;
+        if (dx !== 0) return false;
         if (_value === 0 && dy > 0) return false;
         if (_value < 0 && dy < 0) return false;
         if (_value < 0 && dy > 0 && moveY > 180) return false;
@@ -84,12 +85,20 @@ export default class TabBar extends Component {
         }}
         {...this._panResponder.panHandlers}
       >
-        <TabHeader activeTab={activeTab} onPress={activeTab => this.setState({ activeTab })} />
+        <TabHeader
+          activeTab={activeTab}
+          onPress={activeTab => {
+            this.setState({ activeTab }, () => {
+              this.scroll.scrollTo({ x: width * activeTab, y: 0, animated: true });
+            });
+          }}
+        />
 
         <View style={{ height, width }}>
           <ScrollView
             horizontal
             pagingEnabled
+            ref={ref => (this.scroll = ref)}
             style={{ height, width }}
             onScrollEndDrag={event => {
               const scrolledLength = event.nativeEvent.targetContentOffset.x;
