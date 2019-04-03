@@ -136,13 +136,11 @@ export default class TabBar extends Component {
     this._panResponder = PanResponder.create({
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
         const animatedValueY = this._animatedValue.y;
-        // const { dy } = gestureState;
         const { dy, moveY } = gestureState;
-        // console.log('TCL: TabBar -> setup -> dy, moveY', dy, moveY);
         const { _offset, _value } = animatedValueY;
-        // console.log('TCL: TabBar -> setup -> _offset, _value', _offset, _value);
         if (_value === 0 && dy > 0) return false;
         if (_value < 0 && dy < 0) return false;
+        if (_value < 0 && dy > 0 && moveY > 180) return false;
         if (_offset * -1 === _value && dy > 0) return false;
 
         return true;
