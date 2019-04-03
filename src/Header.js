@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     height: 25,
     width: 25,
     borderRadius: 20,
-    backgroundColor: blue,
     position: 'absolute',
     left: 20,
     alignItems: 'center',
@@ -34,7 +33,7 @@ const IconWithBubble = ({ name, number, msg }) => (
   <TouchableOpacity onPress={() => Alert.alert(msg)}>
     <Icon name={name} size={size} />
 
-    <View style={styles.bubbleCont}>
+    <View style={{ ...styles.bubbleCont, backgroundColor: blue }}>
       <Text style={styles.bubbleText}>{number}</Text>
     </View>
   </TouchableOpacity>

@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
   container: {
     height: 100,
     width: 100,
-    backgroundColor: blue,
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
@@ -17,7 +16,10 @@ const styles = StyleSheet.create({
 });
 
 export default ({ onPress }) => (
-  <TouchableOpacity style={styles.container} onPress={onPress}>
+  <TouchableOpacity
+    style={{ ...styles.container, backgroundColor: blue }}
+    onPress={onPress}
+  >
     <Icon name="times" size={50} color="white" />
   </TouchableOpacity>
 );

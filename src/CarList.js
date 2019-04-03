@@ -22,16 +22,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  bubbleCont: {
-    height: 25,
-    width: 25,
-    borderRadius: 20,
-    backgroundColor: blue,
-    position: 'absolute',
-    left: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   bubbleText: { color: 'white', fontWeight: 'bold', fontSize: 20 },
 });
 const link = 'https://picsum.photos/300/300/?random';
