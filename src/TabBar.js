@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { PanResponder, Animated, View } from 'react-native';
-import { styles, tabs, height } from './constants';
+import { PanResponder, Animated, View, ScrollView } from 'react-native';
+import { styles, tabs, height, width } from './constants';
 import TabHeader from './TabHeader';
 
 export default class TabBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { activeTab: 'General' };
+    this.state = { activeTab: 0 };
     this.setup();
   }
 
@@ -86,7 +86,22 @@ export default class TabBar extends Component {
       >
         <TabHeader activeTab={activeTab} onPress={activeTab => this.setState({ activeTab })} />
 
-        <View style={{ height }}>{tabs[activeTab](activeTab)}</View>
+        <View style={{ height, width }}>
+          <ScrollView
+            horizontal
+            pagingEnabled
+            style={{ height, width }}
+            onScrollEndDrag={event => {
+              const scrolledLength = event.nativeEvent.targetContentOffset.x;
+              const activeTab = scrolledLength / width;
+              this.setState({ activeTab });
+            }}
+          >
+            {tabs.map(({ Component }, index) => (
+              <Component key={index} />
+            ))}
+          </ScrollView>
+        </View>
       </Animated.View>
     );
   }

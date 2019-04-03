@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Dimensions, View, Text, ScrollView } from 'react-native';
 
-const { height } = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   cont: {
     borderTopWidth: 1,
@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
     paddingBottom: 200,
     marginHorizontal: 5,
     justifyContent: 'center',
-    alignItems: 'center',
     zIndex: 3,
+    width,
   },
   commonTabText: {
     marginTop: height / 3,
@@ -76,6 +76,7 @@ const GeneralSection = () => (
     contentContainerStyle={{
       paddingBottom: 300,
       marginHorizontal: 5,
+      width,
     }}
   >
     {generalSectionsArr.map((item, index) => (
@@ -107,11 +108,11 @@ const generalSectionsArr = [
   { heading: 'Base Retail Price', description: '$200' },
   { heading: 'Base Retail Price', description: '$200' },
 ];
-const tabs = {
-  General: GeneralSection,
-  Pricing: CommonTab,
-  Parts: CommonTab,
-  Damages: CommonTab,
-};
+const tabs = [
+  { heading: 'General', Component: GeneralSection },
+  { heading: 'Pricing', Component: () => CommonTab('Pricing') },
+  { heading: 'Parts', Component: () => CommonTab('Parts') },
+  { heading: 'Damages', Component: () => CommonTab('Damages') },
+];
 
-module.exports = { styles, tabs, height };
+module.exports = { styles, tabs, height, width };
