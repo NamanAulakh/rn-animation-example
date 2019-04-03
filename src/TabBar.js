@@ -81,22 +81,21 @@ const Section = ({ heading, description, extra, index }) => {
   );
 };
 const GeneralSection = () => (
-  <Animated.ScrollView
-    // style={{
+  <ScrollView
     contentContainerStyle={{
-      paddingBottom: 1000,
+      paddingBottom: 300,
       marginHorizontal: 5,
     }}
   >
     {generalSectionsArr.map((item, index) => (
       <Section {...item} index={index} key={index} />
     ))}
-  </Animated.ScrollView>
+  </ScrollView>
 );
 const CommonTab = text => (
-  <Animated.ScrollView contentContainerStyle={styles.commonTabCont}>
+  <ScrollView contentContainerStyle={styles.commonTabCont}>
     <Text style={styles.commonTabText}>{text}</Text>
-  </Animated.ScrollView>
+  </ScrollView>
 );
 /**
  * Data
@@ -109,10 +108,6 @@ const generalSectionsArr = [
   { heading: 'Recieved on', description: 'Aug 24, 2018' },
   { heading: 'Vehicle Type', description: 'New' },
   { heading: 'Age', description: '32 days' },
-  { heading: 'Base Retail Price', description: '$200' },
-  { heading: 'Base Retail Price', description: '$200' },
-  { heading: 'Base Retail Price', description: '$200' },
-  { heading: 'Base Retail Price', description: '$200' },
   { heading: 'Base Retail Price', description: '$200' },
   { heading: 'Base Retail Price', description: '$200' },
   { heading: 'Base Retail Price', description: '$200' },
@@ -237,7 +232,7 @@ export default class TabBar extends Component {
           })}
         </View>
 
-        {tabs[activeTab](activeTab)}
+        <View style={{ height }}>{tabs[activeTab](activeTab)}</View>
       </Animated.View>
     );
   }
