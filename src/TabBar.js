@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Text,
   ScrollView,
+  FlatList,
 } from 'react-native';
 
 const { height } = Dimensions.get('window');
@@ -80,7 +81,8 @@ const Section = ({ heading, description, extra, index }) => {
   );
 };
 const GeneralSection = () => (
-  <ScrollView
+  <Animated.ScrollView
+    // style={{
     contentContainerStyle={{
       paddingBottom: 1000,
       marginHorizontal: 5,
@@ -89,12 +91,12 @@ const GeneralSection = () => (
     {generalSectionsArr.map((item, index) => (
       <Section {...item} index={index} key={index} />
     ))}
-  </ScrollView>
+  </Animated.ScrollView>
 );
 const CommonTab = text => (
-  <ScrollView contentContainerStyle={styles.commonTabCont}>
+  <Animated.ScrollView contentContainerStyle={styles.commonTabCont}>
     <Text style={styles.commonTabText}>{text}</Text>
-  </ScrollView>
+  </Animated.ScrollView>
 );
 /**
  * Data
@@ -107,6 +109,16 @@ const generalSectionsArr = [
   { heading: 'Recieved on', description: 'Aug 24, 2018' },
   { heading: 'Vehicle Type', description: 'New' },
   { heading: 'Age', description: '32 days' },
+  { heading: 'Base Retail Price', description: '$200' },
+  { heading: 'Base Retail Price', description: '$200' },
+  { heading: 'Base Retail Price', description: '$200' },
+  { heading: 'Base Retail Price', description: '$200' },
+  { heading: 'Base Retail Price', description: '$200' },
+  { heading: 'Base Retail Price', description: '$200' },
+  { heading: 'Base Retail Price', description: '$200' },
+  { heading: 'Base Retail Price', description: '$200' },
+  { heading: 'Base Retail Price', description: '$200' },
+  { heading: 'Base Retail Price', description: '$200' },
   { heading: 'Base Retail Price', description: '$200' },
 ];
 const tabs = {
@@ -141,7 +153,7 @@ export default class TabBar extends Component {
         if (_value === 0 && dy > 0) return false;
         if (_value < 0 && dy < 0) return false;
         if (_value < 0 && dy > 0 && moveY > 180) return false;
-        if (_offset * -1 === _value && dy > 0) return false;
+        if (Math.abs(_offset) === _value && dy > 0) return false;
 
         return true;
       },
